@@ -56,9 +56,9 @@ namespace :doc do
 
     doc.css("ul#campfire-sounds li").each do |li|
       name = li.text.match(/\/play (.*)/){|m| m[1] }
-      li.set_attribute "id", name
+      li.set_attribute "id", "p-#{name}"
       puts "Indexing /play #{name}"
-      index name, "Event", "index.html##{name}"
+      index name, "Event", "index.html#p-#{name}"
     end
 
     File.open(docdir("index.html"), "w"){|f| f.write doc.to_html }
