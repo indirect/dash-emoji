@@ -5,7 +5,7 @@
 
 ```bash
 $ rake
-$ open [[Emoji.docset]]
+$ open Emoji.docset
 ```
 
 There is no step three!
