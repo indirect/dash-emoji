@@ -35,14 +35,14 @@ namespace :doc do
     end
   end
 
-  task :create do
-    mkdir_p docset("Contents/Resources")
-    cp_r "site/public", docset("Contents/Resources/Documents")
+  task :create => :download do
+    mkdir_p docset("Contents/Resources/Documents")
+    cp_r FileList["site/public/*"], docset("Contents/Resources/Documents/")
     cp "icon.png", docset
     cp "Info.plist", docset("Contents")
   end
 
-  task :index do
+  task :index => :create do
 
     def index(name, type, path)
       sql("INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES ('#{name}', '#{type}', '#{path}');")
@@ -80,7 +80,7 @@ namespace :doc do
     File.open(docdir("index.html"), "w"){|f| f.write doc.to_html }
   end
 
-  task :generate => [:clean, :download, :create, :index]
+  task :generate => [:clean, :index]
 end
 
 task :default => "doc:generate"
